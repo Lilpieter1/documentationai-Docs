@@ -1,0 +1,186 @@
+---
+title: Nousu Integrations
+description: Connect Nousu seamlessly with Shopify and other tools to enhance data flow and extend support automation across your e-commerce ecosystem.
+---
+
+## Overview
+
+Nousu integrates natively with Shopify and supports webhooks, email, and chat platforms to automate your support workflow. Set up these connections to enable real-time order updates, automated responses, and seamless data sync.
+
+<Columns cols={3}>
+  <Card title="Shopify" icon="shopping-bag" href="#shopify-integration">
+    Direct API access for orders, returns, and customer data.
+  </Card>
+  <Card title="Webhooks" icon="zap" href="#webhooks">
+    Real-time notifications for events like order updates.
+  </Card>
+  <Card title="Email & Chat" icon="mail" href="#email-chat">
+    Integrate with tools like Gmail, Zendesk, or Intercom.
+  </Card>
+</Columns>
+
+<Callout kind="tip">
+  Start with Shopify integration for the biggest impact. It handles 80% of common support queries automatically.
+</Callout>
+
+## Shopify Integration
+
+Connect Nousu to your Shopify store via API to pull order status, process returns, and access customer details.
+
+### Prerequisites
+
+Ensure you have:
+- Shopify Partner account
+- Store admin access
+- Nousu API key from your dashboard at `https://dashboard.nousu.nl`
+
+### Setup Steps
+
+<Steps>
+  <Step title="Generate Shopify API Key" icon="key">
+    In Shopify Admin, go to Apps > Develop apps > Create an app. Select scopes for `read_orders`, `read_customers`, and `write_returns`.
+  </Step>
+  <Step title="Add to Nousu Dashboard" icon="settings">
+    Navigate to Integrations > Shopify in Nousu dashboard. Paste your API key and store URL.
+  </Step>
+  <Step title="Test Connection" icon="check-circle">
+    Trigger a test order sync. Verify data appears in Nousu logs.
+  </Step>
+</Steps>
+
+<ParamField path="shopify_api_key" param-type="string" required="true">
+  Your Shopify private app API key. Keep it secure.
+</ParamField>
+
+<ParamField query="store_url" param-type="string" required="true">
+  Format: `https://your-store.myshopify.com`
+</ParamField>
+
+## Webhooks Configuration
+
+Use webhooks for instant updates on Shopify events like order creation or fulfillment.
+
+<CodeGroup tabs="JavaScript,Python">
+  ```javascript
+  // Register webhook in Shopify Admin or via API
+  const webhookData = {
+    topic: "orders/create",
+    address: "https://api.nousu.nl/v1/webhooks/shopify",
+    format: "json"
+  };
+
+  // Send to Shopify GraphQL Admin API
+  await fetch("https://your-store.myshopify.com/admin/api/2024-01/graphql.json", {
+    method: "POST",
+    headers: {
+      "X-Shopify-Access-Token": "YOUR_SHOPIFY_TOKEN",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      query: `mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {
+        webhookSubscriptionCreate(topic: $topic, webhookSubscription: $webhookSubscription) {
+          webhookSubscription {
+            id
+          }
+          userErrors { field message }
+        }
+      }`,
+      variables: { topic: webhookData.topic, webhookSubscription: webhookData }
+    })
+  });
+  ```
+  ```python
+  import requests
+
+  webhook_data = {
+      "topic": "orders/create",
+      "address": "https://api.nousu.nl/v1/webhooks/shopify",
+      "format": "json"
+  }
+
+  response = requests.post(
+      "https://your-store.myshopify.com/admin/api/2024-01/graphql.json",
+      headers={
+          "X-Shopify-Access-Token": "YOUR_SHOPIFY_TOKEN",
+          "Content-Type": "application/json"
+      },
+      json={
+          "query": """
+          mutation webhookSubscriptionCreate($topic: WebhookSubscriptionTopic!, $webhookSubscription: WebhookSubscriptionInput!) {
+              webhookSubscriptionCreate(topic: $topic, webhookSubscription: $webhookSubscription) {
+                  webhookSubscription { id }
+                  userErrors { field message }
+              }
+          }
+          """,
+          "variables": {"topic": webhook_data["topic"], "webhookSubscription": webhook_data}
+      }
+  )
+  ```
+</CodeGroup>
+
+<Request tabs="cURL" show-lines="true">
+  ```bash
+  curl -X POST https://api.nousu.nl/v1/webhooks/verify \
+    -H "Authorization: Bearer YOUR_NOUSU_API_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "shopify_event": "orders/create",
+      "data": { "order_id": 123456789 }
+    }'
+  ```
+</Request>
+
+## Email and Chat Integrations
+
+<Tabs>
+  <Tab title="Email (Gmail/IMAP)" icon="mail">
+    Configure IMAP for inbound emails. Nousu parses tickets and responds automatically.
+    
+    <CodeGroup tabs="Configuration">
+      ```yaml
+      imap:
+        host: imap.gmail.com
+        port: 993
+        username: support@yourstore.com
+        password: YOUR_APP_PASSWORD
+      ```
+    </CodeGroup>
+  </Tab>
+  <Tab title="Chat (Zendesk)" icon="message-circle">
+    Use Zendesk API to sync tickets. Enable Nousu as a bot user.
+    
+    <ParamField header="Zendesk-Token" param-type="string" required="true">
+      Your Zendesk OAuth token.
+    </ParamField>
+  </Tab>
+</Tabs>
+
+## Data Privacy and Permissions
+
+Nousu prioritizes your data security. All integrations use encrypted connections and minimal scopes.
+
+<Callout kind="alert">
+  Review permissions regularly. Revoke unused API keys immediately.
+</Callout>
+
+<Expandable title="Advanced Privacy Settings" default-open="false">
+  Enable data retention policies in dashboard:
+  
+  | Setting          | Default | Description                  |
+  |------------------|---------|------------------------------|
+  | Log Retention    | 30 days | Delete support logs after    |
+  | PII Masking      | On      | Anonymize customer data      |
+  | Audit Logs       | On      | Track all integration access |
+  
+  Customize via API:
+  ```javascript
+  await fetch("https://api.nousu.nl/v1/privacy", {
+    method: "PATCH",
+    headers: { "Authorization": "Bearer YOUR_API_KEY" },
+    body: JSON.stringify({ log_retention_days: 90 })
+  });
+  ```
+</Expandable>
+
+Integrate now to streamline your Shopify support from chaos to control.

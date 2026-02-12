@@ -1,0 +1,131 @@
+---
+title: Changelog
+description: Stay updated with the latest releases, new features, and improvements in Nousu to keep your support automation current.
+---
+
+## Stay Up to Date
+
+<Callout kind="info">
+Subscribe to our changelog RSS feed or join the Nousu Discord community to get notified about new releases and important updates.
+</Callout>
+
+Nousu releases updates frequently to enhance your Shopify support automation. Check your dashboard at `https://dashboard.nousu.nl` for the current version, or use the API endpoint `https://api.nousu.nl/v1/version`.
+
+## Recent Releases
+
+<Update label="2024-10-15" description="v1.3.0" tags={["feature", "improvement"]}>
+## New Features
+
+- Added AI-powered upsell recommendations during support chats. Nousu now analyzes customer queries like "Ik heb het koud" and suggests relevant products like warm blankets.
+- Integrated real-time order tracking with more carriers, reducing WISMO (Where Is My Order?) responses by up to 80%.
+
+## Improvements
+
+- Enhanced Shopify integration for faster return processing (now under 15 seconds).
+- Better context passing to human agents for escalations, including full chat history.
+
+## Bug Fixes
+
+- Fixed intermittent sync issues with Shopify orders.
+- Resolved UI glitches in the dashboard demo viewer.
+</Update>
+
+<Update label="2024-09-25" description="v1.2.0" tags={["bugfix", "security"]}>
+## New Features
+
+- Introduced automated FAQ handling with product upsell conversion (up to +15% sales from support tickets).
+- Added webhook support for custom escalations to your tools.
+
+## Improvements
+
+- Performance boost: Chat responses now `<500ms` on average.
+- Dashboard analytics now include conversion tracking from AI suggestions.
+
+## Bug Fixes
+
+- Patched security vulnerability in token handling (no customer data exposed).
+- Fixed return label generation errors for international orders.
+
+## Migration Notes
+
+Update your webhook URL if using custom endpoints:
+
+<CodeGroup tabs="JavaScript,Python">
+```javascript
+const webhookUrl = 'https://your-webhook-url.com/nousu/webhook';
+// Add v1.2.0 header
+headers: { 'X-Nousu-Version': '1.2.0' }
+```
+```python
+webhook_url = "https://your-webhook-url.com/nousu/webhook"
+headers = {"X-Nousu-Version": "1.2.0"}
+```
+</CodeGroup>
+</Update>
+
+<Update label="2024-08-10" description="v1.1.0" tags={["feature", "breaking"]}>
+## New Features
+
+- Core Shopify integration: Auto-respond to order status, returns, and basic FAQs.
+- Live demo mode for testing conversations in the dashboard.
+
+## Breaking Changes
+
+- API base path changed from `/v0` to `/v1`. Update your integration endpoints.
+
+## Migration Notes
+
+Run this command in your Shopify app settings:
+
+````bash
+npm update @nousu/shopify-sdk@latest
+````
+
+All existing chats remain intact.
+</Update>
+
+## How to Update
+
+Follow these steps to apply the latest Nousu version:
+
+<Steps>
+<Step title="Check Current Version" icon="database">
+Visit your dashboard at `https://dashboard.nousu.nl/account` and note the version number.
+</Step>
+
+<Step title="Review Migration Notes" icon="alert-triangle">
+Scan the release notes above for any breaking changes or required config updates.
+</Step>
+
+<Step title="Redeploy Integration" icon="rocket">
+```bash
+# In your Shopify app directory
+shopify app deploy
+```
+Nousu auto-syncs within 60 seconds.
+</Step>
+
+<Step title="Test Demo" icon="play-circle">
+Use the live demo at `https://nousu.nl/#demo` to verify new features like upsell.
+</Step>
+</Steps>
+
+<Callout kind="tip">
+After updating, monitor your support metrics for 24 hours to ensure smooth performance.
+</Callout>
+
+## Next Steps
+
+<Columns cols={3}>
+<Card title="Quickstart" icon="zap" href="/quickstart">
+Get started with Nousu in 10 minutes.
+</Card>
+
+<Card title="Configuration" icon="settings" href="/configuration">
+Customize AI responses and integrations.
+</Card>
+
+<Card title="API Reference" icon="code" href="/authentication">
+Integrate programmatically with our API.
+</Card>
+</Columns>

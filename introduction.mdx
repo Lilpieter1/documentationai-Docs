@@ -1,0 +1,111 @@
+---
+title: Introduction to Nousu
+description: Discover Nousu, an AI-powered colleague that automates Shopify customer support, reducing repetitive tasks and boosting sales through intelligent recommendations.
+---
+
+<Callout kind="info" title="Starter Kit Template">
+  This documentation was generated as a starter kit template based on your brand. Please review and customize the content to accurately reflect your product's features, APIs, and capabilities.
+</Callout>
+
+## Overview
+
+Nousu transforms your Shopify customer support by automating repetitive inquiries like order status checks and returns processing. You deploy an AI colleague that handles 80% of routine tickets, freeing your team for high-value escalations and sales opportunities. Start in minutes with seamless Shopify integration—no coding required.
+
+<Callout kind="tip">
+  Nousu understands your product catalog to provide personalized upsell recommendations during support chats.
+</Callout>
+
+## Key Benefits
+
+Nousu delivers immediate value for Shopify merchants through automation and intelligence.
+
+<Columns cols={3}>
+  <Card title="Reduce Repetitive Work" icon="zap" href="#use-cases">
+    Handle `<80%` of "Where is my order?" queries automatically.
+  </Card>
+  <Card title="Speed Up Returns" icon="package" href="#use-cases">
+    Process returns in `<15` seconds with guided customer flows.
+  </Card>
+  <Card title="Boost Sales" icon="trending-up" href="#use-cases">
+    Convert support chats into upsells with product recommendations.
+  </Card>
+</Columns>
+
+## Primary Use Cases
+
+Explore how Nousu tackles common Shopify support challenges.
+
+<Tabs>
+  <Tab title="Order Status (WISMO)" icon="truck">
+    Automatically respond to tracking requests by pulling real-time data from Shopify.
+
+    ```javascript
+    // Example webhook response for order status
+    {
+      "order_id": "12345",
+      "status": "shipped",
+      "tracking_url": "https://carrier.com/track/abc123"
+    }
+    ```
+  </Tab>
+  <Tab title="Returns Processing" icon="rotate-ccw">
+    Guide customers through return steps, updating Shopify orders instantly.
+  </Tab>
+  <Tab title="Product Upsells" icon="shopping-bag">
+    Analyze queries like "It's too cold" and recommend matching items from your catalog.
+  </Tab>
+  <Tab title="Smart Escalations" icon="user-check">
+    Route complex issues to your team with full context in `<60` seconds.
+  </Tab>
+</Tabs>
+
+## Quick Start
+
+Get Nousu running on your Shopify store in four steps.
+
+<Steps>
+  <Step title="Sign Up" icon="user-plus">
+    Create your account at `https://nousu.nl/signup`. No credit card needed.
+  </Step>
+  <Step title="Install App" icon="download">
+    Add the Nousu app from the Shopify App Store.
+    
+    <CodeGroup tabs="Shopify CLI,npx">
+      ```bash
+      shopify app install nousu-support
+      ```
+      ```bash
+      npx @shopify/create-app@latest nousu-integration
+      ```
+    </CodeGroup>
+  </Step>
+  <Step title="Configure AI" icon="settings">
+    Connect your store and train Nousu on your products via the dashboard at `https://dashboard.example.com`.
+  </Step>
+  <Step title="Launch" icon="rocket">
+    Enable live chat. Monitor performance in real-time.
+  </Step>
+</Steps>
+
+## Next Steps
+
+Dive deeper into Nousu documentation.
+
+<Columns cols={2}>
+  <Card title="Quickstart Guide" icon="book-open" href="/quickstart">
+    Complete setup with code examples.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Secure API access for custom integrations.
+  </Card>
+  <Card title="Configuration" icon="sliders" href="/configuration">
+    Customize AI behaviors and webhooks.
+  </Card>
+  <Card title="Changelog" icon="git-branch" href="/changelog">
+    Stay updated with latest releases.
+  </Card>
+</Columns>
+
+<Callout kind="success">
+  Ready to automate? Follow the [Quickstart Guide](/quickstart) to launch your first AI agent.
+</Callout>

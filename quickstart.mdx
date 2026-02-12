@@ -1,0 +1,156 @@
+---
+title: Getting Started with Nousu
+description: Set up your Nousu account, integrate with Shopify, and launch your first AI support automation in under 10 minutes.
+---
+
+## Prerequisites
+
+<Callout kind="info" title="Before You Begin">
+Ensure you have:
+- A Shopify store with admin access
+- Store owner or admin permissions
+- No credit card required for the free trial
+</Callout>
+
+## Create a Free Trial Account
+
+Sign up for Nousu in minutes to access your AI support automation dashboard.
+
+<Steps>
+  <Step title="Visit Signup Page" icon="external-link">
+    Go to the [Nousu signup page](https://nousu.nl/signup).
+  </Step>
+  <Step title="Enter Store Details" icon="shop">
+    Provide your Shopify store URL and email address.
+  </Step>
+  <Step title="Verify Email" icon="mail">
+    Check your inbox and click the verification link.
+  </Step>
+</Steps>
+
+<Callout kind="tip">
+  Trials start immediately—no setup delays.
+</Callout>
+
+## Install the Shopify App
+
+Install the official Nousu app directly from the Shopify App Store.
+
+<Steps>
+  <Step title="Search for Nousu" icon="search">
+    In your Shopify admin, navigate to **Apps** > **Shopify App Store** and search for "Nousu".
+  </Step>
+  <Step title="Add App" icon="download">
+    Click **Add app** and authorize the required permissions for orders, customers, and refunds.
+  </Step>
+  <Step title="Connect to Nousu" icon="link">
+    Return to your Nousu dashboard and click **Connect Shopify Store**.
+  </Step>
+</Steps>
+
+## Configure Basic AI Settings
+
+Customize Nousu's responses for your store using the dashboard.
+
+<Tabs default-tab="2">
+  <Tab title="Auto-Reply Settings" icon="message-circle">
+    Enable automatic responses for common queries like order status.
+    
+    ```json
+    {
+      "enabled": true,
+      "triggers": ["where is my order", "wismo", "tracking"],
+      "template": "Your order #{order_id} is on its way. Track it here: {tracking_url}"
+    }
+    ```
+  </Tab>
+  <Tab title="Product Recommendations" icon="shopping-bag">
+    Set up upsell prompts based on customer queries.
+    
+    ```json
+    {
+      "enabled": true,
+      "keywords": ["cold", "warm", "bedding"],
+      "products": ["warm-dekbed", "fleece-blanket"]
+    }
+    ```
+  </Tab>
+  <Tab title="Escalation Rules" icon="alert-triangle">
+    Define when to forward to human agents.
+    
+    ```json
+    {
+      "threshold": 3,
+      "forward_to": "support@yourstore.com",
+      "include_context": true
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Test Automated Responses
+
+Verify everything works by simulating customer interactions.
+
+<Steps>
+  <Step title="Enable Test Mode" icon="play">
+    In the Nousu dashboard, toggle **Test Mode** on.
+  </Step>
+  <Step title="Send Test Query" icon="message-circle">
+    Use the demo chat: "Where is my order?"
+    
+    <Image
+      src="https://nousu.nl/demo-screenshot.png"
+      alt="Nousu demo chat responding to order status query"
+      width="800"
+      height="500"
+    />
+  </Step>
+  <Step title="Review Logs" icon="file-text">
+    Check the **Activity Log** for response details and accuracy.
+  </Step>
+</Steps>
+
+<CodeGroup tabs="cURL,JavaScript">
+```bash
+curl -X POST https://api.example.com/v1/test-response \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "Where is my order?",
+    "store_id": "your-shopify-store-id"
+  }'
+```
+
+```javascript
+const response = await fetch('https://api.example.com/v1/test-response', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    query: 'Where is my order?',
+    store_id: 'your-shopify-store-id'
+  })
+});
+```
+</CodeGroup>
+
+## Next Steps
+
+<Columns cols={3}>
+  <Card title="Advanced Configuration" icon="settings" href="/configuration">
+    Dive into custom workflows and integrations.
+  </Card>
+  <Card title="Authentication" icon="lock" href="/authentication">
+    Secure your API access and webhooks.
+  </Card>
+  <Card title="Use Cases" icon="zap" href="/introduction#use-cases">
+    Explore WISMO, returns, and upsell automations.
+  </Card>
+</Columns>
+
+<Callout kind="success">
+  Congratulations! Your Nousu AI support is live. Monitor the first 24 hours and refine based on real interactions.
+</Callout>
